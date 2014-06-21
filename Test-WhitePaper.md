@@ -12,7 +12,7 @@ Satoshi Nakamotoが2009年1月にビットコインブロックチェインを�
 
 * [目次](#history)
     * [状態遷移システムとしてのBitcoin](#状態遷移システムとしてのbitcoin)
-    * [マイニング](#mining)
+    * [マイニング](#マイニング)
     * [マークルツリー](#merkle-trees)
     * [その他のブロックチェインアプリケーション](#alternative-blockchain-applications)
     * [スクリプティング](#scripting)
