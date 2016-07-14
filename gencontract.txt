@@ -1,0 +1,33 @@
+■Contract
+contract TestMapping {
+         mapping (uint => uint) public storedData;
+
+         function set(uint key, uint data){
+                  storedData[key] =  data;
+         }
+         function get(uint key) constant returns(uint retVal){
+         return storedData[key];
+         }
+}
+
+
+■ABI
+[{"constant":false,"inputs":[{"name":"key","type":"uint256"},{"name":"data","type":"uint256"}],"name":"set","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"storedData","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[{"name":"key","type":"uint256"}],"name":"get","outputs":[{"name":"retVal","type":"uint256"}],"type":"function"}] 
+
+
+■コマンド
+> var source = "contract TestMapping { mapping (uint => uint) public storedData; function set(uint key, uint data){ storedData[key] = data; } function get(uint key) constant returns(uint retVal){ return storedData[key]; } }"
+
+> var sourceCompiled = eth.compile.solidity(source)
+
+> var contractAbiDefinition = sourceCompiled.TestMapping.info.abiDefinition
+> var sourceCompiledContract = eth.contract(contractAbiDefinition)
+> var contract = sourceCompiledContract.new({from:eth.accounts[0], data: sourceCompiled.TestMapping.code})
+
+var cnt = eth.contract([{"constant":false,"inputs":[{"name":"key","type":"uint256"},{"name":"data","type":"uint256"}],"name":"set","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"storedData","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[{"name":"key","type":"uint256"}],"name":"get","outputs":[{"name":"retVal","type":"uint256"}],"type":"function"}]).at('0x264dda8f2678cc09eb757510e65889bc70703e2e');
+
+cnt.set.sendTransaction(1,10, {from:eth.accounts[0], gas:1000000})
+
+
+■json-rpc
+curl -X POST http://localhost:8545 --data '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[{ "from": "0x15d18e6ac542613018a7433161dba99fffae75da","to": "0x264dda8f2678cc09eb757510e65889bc70703e2e","gas": "0x76c0","gasPrice": "0x9184e72a000","value": "0x9184e72a","data": "0x1ab06e00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000003"}],"id":1}'
